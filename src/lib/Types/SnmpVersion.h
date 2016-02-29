@@ -7,7 +7,8 @@ class SnmpVersion : public Integer
     Q_OBJECT
 public:
     enum Version {
-        SNMPv1 = 0
+        SNMPv1 = 0,
+        SNMPv2 = 1
     };
 
     SnmpVersion(Version version, QObject *parent = 0);

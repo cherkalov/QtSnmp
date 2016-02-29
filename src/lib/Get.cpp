@@ -28,15 +28,15 @@ Get::Get(const QString &peer, const QString &objectId, QObject *parent) :
     peer(peer),
     objectId(objectId),
     socket(new QUdpSocket(this))
-{    
+{
     socket->bind(10500);
-    connect(socket,SIGNAL(readyRead()),SLOT(readPendingDatagram()));
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagram()));
 
 }
 
 void Get::execute()
 {
-    SnmpVersion *version = new SnmpVersion(SnmpVersion::SNMPv1);
+    SnmpVersion *version = new SnmpVersion(SnmpVersion::SNMPv2);
     OctetString *community = new OctetString("public"); //#TODO: Make configurable.
 
     Integer *requestId = new Integer(1);
@@ -54,7 +54,7 @@ void Get::execute()
     socket->writeDatagram(datagram, QHostAddress(peer), 161);
 }
 
-QStringList Get::getResponse() const
+QList<ResponseStruct> Get::getResponse() const
 {
     return response;
 }
@@ -62,11 +62,15 @@ QStringList Get::getResponse() const
 void Get::readPendingDatagram()
 {
     while (socket->hasPendingDatagrams()) {
-        QByteArray datagram;
+        QByteArray datagram, remove;
         datagram.resize(socket->pendingDatagramSize());
         QHostAddress sender;
         quint16 senderPort;
         socket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+
+        remove.append('\x82');
+        remove.append('\x00');
+        datagram.replace(remove, "");
 
         QDataStream stream(&datagram, QIODevice::ReadOnly);
         Type::AbstractSyntaxNotationOneType type;
@@ -79,23 +83,26 @@ void Get::readPendingDatagram()
         SnmpMessage sequence;
         bytesRead += sequence.decode(stream);
 
-        QStringList responses;
+        ResponseStruct responses;
         VarbindList *varbindList = sequence.getProtocolDataUnit()->getVarbindList();
         foreach (Varbind *varbind, varbindList->getVarbinds()) {
-            responses += QString("%1 = %2 : %3")
-                    .arg(varbind->getObjectIdentifier()->toString())
-                    .arg(DataTypeFactory::getTypeName(varbind->getValue()->getType()))
-                    .arg(varbind->getValue()->toString());
-
-            response.append(varbind->getValue()->toString());
+            responses.objectIdentifier = varbind->getObjectIdentifier()->toString();
+            responses.type = DataTypeFactory::getTypeName(varbind->getValue()->getType());
+            responses.value = varbind->getValue()->toString();
+            response.append(responses);
         }
 
-        qDebug() << QString("SNMP datagram has been read!\n"
-                            "Version: %1\n"
-                            "Community: %2\n"
-                            "Responses: %3")
-                    .arg(sequence.getSnmpVersion()->getVersion() + 1)
-                    .arg(sequence.getCommunity()->getValue())
-                    .arg(responses.join("\n"));
+        emit readedDatagram();
+
+        foreach(responses, response)
+        {
+            qDebug() << QString("SNMP datagram has been read!\n"
+                                "Version: %1\n"
+                                "Community: %2\n"
+                                "Responses: %3 = %4 : %5\n")
+                                .arg(sequence.getSnmpVersion()->getVersion() + 1)
+                                .arg(sequence.getCommunity()->getValue())
+                                .arg(responses.objectIdentifier).arg(responses.type).arg(responses.value);
+        }
     }
 }
