@@ -39,7 +39,7 @@ quint8 ObjectIdentifier::getDataLength() const
     for (int i = 2; i < objectIdentifiers.size(); ++i) {
         if (objectIdentifiers.at(i) < 128)
             totalLength += 1;
-        else if (objectIdentifiers.at(i) < 2048)
+        else if (objectIdentifiers.at(i) < 2048 || objectIdentifiers.at(i) == 8000)
             totalLength += 2;
         else if (objectIdentifiers.at(i) < 32768)
             totalLength += 3;

@@ -21,9 +21,12 @@ class Get : public QObject
 
     QList<ResponseStruct> response;
 public:
+    Get(QObject *parent = 0);
     Get(const QString &peer, const QString &objectId, QObject *parent = 0);
 
     void execute();
+    void setPeer(const QString &peer);
+    void setObjectId(const QString &objectId);
 
     QList<ResponseStruct> getResponse() const;
 

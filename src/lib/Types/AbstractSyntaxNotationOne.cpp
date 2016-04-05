@@ -24,6 +24,8 @@ QByteArray AbstractSyntaxNotationOne::encode() const
     code.append(dataLength);
     code.append(encodeData());
 
+    qDebug() << dataLength << code.toHex();
+
     return code;
 }
 

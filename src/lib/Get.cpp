@@ -23,6 +23,14 @@
 #include <QDebug>
 #endif
 
+Get::Get(QObject *parent) :
+    QObject(parent),
+    socket(new QUdpSocket(this))
+{
+    socket->bind(10500);
+    connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagram()));
+}
+
 Get::Get(const QString &peer, const QString &objectId, QObject *parent) :
     QObject(parent),
     peer(peer),
@@ -32,6 +40,16 @@ Get::Get(const QString &peer, const QString &objectId, QObject *parent) :
     socket->bind(10500);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagram()));
 
+}
+
+void Get::setPeer(const QString &peer)
+{
+    this->peer = peer;
+}
+
+void Get::setObjectId(const QString &objectId)
+{
+    this->objectId = objectId;
 }
 
 void Get::execute()
@@ -51,6 +69,7 @@ void Get::execute()
 
     SnmpMessage snmpMessage(version, community, getRequestPDU);
     QByteArray datagram = snmpMessage.encode();
+    qDebug() << "datagram:" << datagram << datagram.toHex();
     socket->writeDatagram(datagram, QHostAddress(peer), 161);
 }
 

@@ -14,6 +14,7 @@ enum AbstractSyntaxNotationOneType {
     Sequence = 0x30,
     GetRequestPDU = 0xa0,
     GetResponsePDU = 0xa2,
+    SetRequestPDU = 0xa3,
 
     NullObject = 0xff
 };
