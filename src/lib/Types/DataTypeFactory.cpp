@@ -21,6 +21,8 @@ DataTypeFactory::TypeMap DataTypeFactory::typeMap()
     static TypeMap typeMap;
     if (typeMap.isEmpty()) {
         typeMap.insert(Type::Integer, "Integer");
+        typeMap.insert(Type::Gauge32, "Gauge32");
+        typeMap.insert(Type::Counter32, "Counter32");
         typeMap.insert(Type::OctetString, "String");
         typeMap.insert(Type::NullObject, "Unknown type");
     }
@@ -32,6 +34,7 @@ AbstractSyntaxNotationOne *DataTypeFactory::createType(Type::AbstractSyntaxNotat
     switch (type) {
     case Type::Integer: return new Integer(parent);
     case Type::Gauge32: return new Integer(parent);
+    case Type::Counter32 return new Integer(parent);
     case Type::OctetString: return new OctetString(parent);
     case Type::Null: return new Null(parent);
     case Type::ObjectIdentifier: return new ObjectIdentifier(parent);
