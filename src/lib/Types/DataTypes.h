@@ -7,8 +7,8 @@
 namespace Type{
 enum AbstractSyntaxNotationOneType {
     Integer = 0x02,
+    Counter32 = 0x41,
     Gauge32 = 0x42,
-    Counter32 = 0x65,
     OctetString = 0x04,
     Null = 0x05,
     ObjectIdentifier = 0x06,
