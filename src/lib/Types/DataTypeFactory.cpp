@@ -34,7 +34,7 @@ AbstractSyntaxNotationOne *DataTypeFactory::createType(Type::AbstractSyntaxNotat
     switch (type) {
     case Type::Integer: return new Integer(parent);
     case Type::Gauge32: return new Integer(parent);
-    case Type::Counter32 return new Integer(parent);
+    case Type::Counter32: return new Integer(parent);
     case Type::OctetString: return new OctetString(parent);
     case Type::Null: return new Null(parent);
     case Type::ObjectIdentifier: return new ObjectIdentifier(parent);
