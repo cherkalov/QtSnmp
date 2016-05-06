@@ -24,6 +24,7 @@ DataTypeFactory::TypeMap DataTypeFactory::typeMap()
         typeMap.insert(Type::Gauge32, "Gauge32");
         typeMap.insert(Type::Counter32, "Counter32");
         typeMap.insert(Type::OctetString, "String");
+        typeMap.insert(Type::IpAddress, "IpAddress");
         typeMap.insert(Type::NullObject, "Unknown type");
     }
     return typeMap;
@@ -36,6 +37,7 @@ AbstractSyntaxNotationOne *DataTypeFactory::createType(Type::AbstractSyntaxNotat
     case Type::Gauge32: return new Integer(parent);
     case Type::Counter32: return new Integer(parent);
     case Type::OctetString: return new OctetString(parent);
+    case Type::IpAddress: return new OctetString(parent);
     case Type::Null: return new Null(parent);
     case Type::ObjectIdentifier: return new ObjectIdentifier(parent);
     case Type::Sequence: return new Sequence(parent);

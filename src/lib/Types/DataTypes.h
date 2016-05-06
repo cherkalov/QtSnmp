@@ -10,6 +10,7 @@ enum AbstractSyntaxNotationOneType {
     Counter32 = 0x41,
     Gauge32 = 0x42,
     OctetString = 0x04,
+    IpAddress = 0x40,
     Null = 0x05,
     ObjectIdentifier = 0x06,
     Sequence = 0x30,

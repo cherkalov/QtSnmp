@@ -48,5 +48,5 @@ void OctetString::decodeData(QDataStream &inputStream, quint8 length)
         buffer.append(byte);
     }
 
-    value = buffer;
+    value = QString::fromStdString(buffer.toStdString());
 }
