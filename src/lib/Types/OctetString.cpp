@@ -48,5 +48,9 @@ void OctetString::decodeData(QDataStream &inputStream, quint8 length)
         buffer.append(byte);
     }
 
-    value = QString::fromStdString(buffer.toStdString());
+    for (int i = 0; i < buffer.size(); i++) {
+        if (buffer[i] != '\x00') {
+            value += buffer[i];
+        }
+    }
 }
