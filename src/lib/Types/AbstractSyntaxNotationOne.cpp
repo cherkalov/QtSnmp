@@ -49,7 +49,7 @@ Type::AbstractSyntaxNotationOneType AbstractSyntaxNotationOne::getType() const
     return type;
 }
 
-QString AbstractSyntaxNotationOne::toString() const
+QVariant AbstractSyntaxNotationOne::toVariant() const
 {
-    return QString();
+    return QVariant();
 }

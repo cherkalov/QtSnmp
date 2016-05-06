@@ -30,6 +30,11 @@ QString Integer::toString() const
     return QString::number(value);
 }
 
+QVariant Integer::toVariant() const
+{
+    return QVariant::fromValue(value);
+}
+
 quint8 Integer::getDataLength() const
 {
     int value = this->value;

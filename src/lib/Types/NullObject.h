@@ -7,6 +7,7 @@ class NullObject : public AbstractSyntaxNotationOne
     Q_OBJECT
 public: 
     QString toString() const;
+    QVariant toVariant() const;
 
     static NullObject *Instance();
 private:

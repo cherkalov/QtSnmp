@@ -14,6 +14,7 @@ public:
     qint32 getValue() const;
 
     QString toString() const;
+    QVariant toVariant() const;
 
 private:
     quint8 getDataLength() const;

@@ -6,6 +6,7 @@
 #include "../Expections/SnmpException.h"
 
 #include <QByteArray>
+#include <QVariant>
 
 class DataTypeFactory;
 class AbstractSyntaxNotationOne : public QObject
@@ -21,7 +22,7 @@ public:
 
     Type::AbstractSyntaxNotationOneType getType() const;
 
-    virtual QString toString() const;
+    virtual QVariant toVariant() const;
 
 private:
     virtual quint8 getDataLength() const = 0;

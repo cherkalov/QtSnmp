@@ -11,18 +11,23 @@ OctetString::OctetString(QObject *parent) :
 
 OctetString::OctetString(const QString &value, QObject *parent) :
     AbstractSyntaxNotationOne(Type::OctetString, parent),
-    value(value)
+    value(value.toUtf8())
 {
 }
 
 QString OctetString::getValue() const
 {
-    return value;
+    return QString::fromUtf8(value);
 }
 
 QString OctetString::toString() const
 {
     return getValue();
+}
+
+QVariant OctetString::toVariant() const
+{
+    return QVariant::fromValue(value);
 }
 
 quint8 OctetString::getDataLength() const
@@ -48,9 +53,13 @@ void OctetString::decodeData(QDataStream &inputStream, quint8 length)
         buffer.append(byte);
     }
 
-    for (int i = 0; i < buffer.size(); i++) {
-        if (buffer[i] != '\x00') {
-            value = buffer.mid(i);
-        }
-    }
+//    int n = buffer.size();
+//    for (int i = 0; i < buffer.size(); i++) {
+//        if (buffer[i] != '\x00') {
+//            n = i;
+//            break;
+//        }
+//    }
+//    buffer = buffer.remove(0, n);
+    value = buffer;
 }

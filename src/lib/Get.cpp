@@ -108,7 +108,7 @@ void Get::readPendingDatagram()
         foreach (Varbind *varbind, varbindList->getVarbinds()) {
             responses.objectIdentifier = varbind->getObjectIdentifier()->toString();
             responses.type = DataTypeFactory::getTypeName(varbind->getValue()->getType());
-            responses.value = varbind->getValue()->toString();
+            responses.value = varbind->getValue()->toVariant();
             response.append(responses);
         }
 
@@ -122,7 +122,7 @@ void Get::readPendingDatagram()
                                 "Responses: %3 = %4 : %5\n")
                                 .arg(sequence.getSnmpVersion()->getVersion() + 1)
                                 .arg(sequence.getCommunity()->getValue())
-                                .arg(responses.objectIdentifier).arg(responses.type).arg(responses.value);
+                                .arg(responses.objectIdentifier).arg(responses.type).arg(responses.value.toString());
         }
     }
 }

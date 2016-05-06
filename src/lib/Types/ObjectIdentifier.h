@@ -14,6 +14,7 @@ public:
     ObjectIdentifier(const QString &objectIdentifier, QObject *parent = 0);
 
     QString toString() const;
+    QVariant toVariant() const;
 
 private:
     quint8 getDataLength() const;

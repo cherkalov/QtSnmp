@@ -6,13 +6,14 @@
 class OctetString : public AbstractSyntaxNotationOne
 {
     Q_OBJECT
-    QString value;    
+    QByteArray value;
 public:
     OctetString(QObject *parent = 0);
     OctetString(const QString &value, QObject *parent = 0);
 
     QString getValue() const;
     QString toString() const;
+    QVariant toVariant() const;
 
 private:
     quint8 getDataLength() const;

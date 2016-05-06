@@ -10,6 +10,11 @@ QString Null::toString() const
     return QString("null");
 }
 
+QVariant Null::toVariant() const
+{
+    return QVariant::fromValue(NULL);
+}
+
 quint8 Null::getDataLength() const
 {
     return 0;

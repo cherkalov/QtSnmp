@@ -11,6 +11,12 @@ QString NullObject::toString() const
     return QString();
 }
 
+QVariant NullObject::toVariant() const
+{
+    throw SnmpException("No such element");
+    return QVariant();
+}
+
 NullObject *NullObject::Instance()
 {
     static NullObject nullObject;

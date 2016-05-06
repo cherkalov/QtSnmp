@@ -2,13 +2,14 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QVariant>
 
 class QUdpSocket;
 
 struct ResponseStruct {
     QString objectIdentifier;
     QString type;
-    QString value;
+    QVariant value;
 };
 
 class Get : public QObject

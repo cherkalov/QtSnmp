@@ -32,6 +32,11 @@ QString ObjectIdentifier::toString() const
     return objectIdentifierStringList.join(".");
 }
 
+QVariant ObjectIdentifier::toVariant() const
+{
+    return QVariant::fromValue(toString());
+}
+
 quint8 ObjectIdentifier::getDataLength() const
 {
     quint8 totalLength = 1;
