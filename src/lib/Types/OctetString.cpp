@@ -50,7 +50,7 @@ void OctetString::decodeData(QDataStream &inputStream, quint8 length)
 
     for (int i = 0; i < buffer.size(); i++) {
         if (buffer[i] != '\x00') {
-            value += buffer[i];
+            value = buffer.mid(i);
         }
     }
 }
