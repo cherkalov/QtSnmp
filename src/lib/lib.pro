@@ -1,5 +1,6 @@
 TEMPLATE = lib
-DESTDIR = ../../lib
+#DESTDIR = ../../lib
+DESTDIR = ../../../../build/libs
 TARGET = qtsnmp
 
 QT       += core

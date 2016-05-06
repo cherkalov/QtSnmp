@@ -102,6 +102,7 @@ void Get::readPendingDatagram()
         SnmpMessage sequence;
         bytesRead += sequence.decode(stream);
 
+        response.clear();
         ResponseStruct responses;
         VarbindList *varbindList = sequence.getProtocolDataUnit()->getVarbindList();
         foreach (Varbind *varbind, varbindList->getVarbinds()) {
@@ -111,7 +112,7 @@ void Get::readPendingDatagram()
             response.append(responses);
         }
 
-        emit readedDatagram();
+        emit readedDatagram(responses);
 
         foreach(responses, response)
         {

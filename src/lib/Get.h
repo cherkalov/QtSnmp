@@ -34,5 +34,5 @@ private Q_SLOTS:
     void readPendingDatagram();
 
 signals:
-    void readedDatagram();
+    void readedDatagram(ResponseStruct);
 };
